@@ -2,13 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
-    const serviceItems = document.querySelectorAll('.service-item'); // Voor de fade-in animatie
+    const serviceItems = document.querySelectorAll('.service-item');
+    const contactFormServiceSelect = document.getElementById('service'); // Select-element van het contactformulier
 
     // Toggle Nav (Mobiel menu)
     burger.addEventListener('click', () => {
         nav.classList.toggle('nav-active');
 
-        // Animate Links
         navLinks.forEach((link, index) => {
             if (link.style.animation) {
                 link.style.animation = '';
@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Burger Animation
         burger.classList.toggle('toggle');
     });
 
@@ -27,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             nav.classList.remove('nav-active');
             burger.classList.remove('toggle');
             navLinks.forEach(item => {
-                item.style.animation = ''; // Reset animation to allow re-animation on next click
+                item.style.animation = '';
             });
         });
     });
@@ -36,14 +35,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const observerOptions = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.1 // Zodra 10% van het element zichtbaar is
+        threshold: 0.1
     };
 
     const serviceObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                observer.unobserve(entry.target); // Stop observing zodra het geanimeerd is
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
@@ -52,6 +51,36 @@ document.addEventListener('DOMContentLoaded', () => {
         serviceObserver.observe(item);
     });
 
-    // Let op: De code voor het afhandelen van het contactformulier via JavaScript is verwijderd.
-    // Formspree regelt nu de verzending en het succesbericht.
+    // NIEUWE FUNCTIONALITEIT: Klik op dienst om naar contactformulier te springen en dienst te selecteren
+    serviceItems.forEach(item => {
+        item.addEventListener('click', (event) => {
+            // Voorkom standaard ankergedrag als de browser traag is
+            event.preventDefault();
+
+            const serviceName = item.dataset.service; // Haal de dienstnaam op uit data-service attribuut
+
+            // Scroll naar het contactformulier
+            document.getElementById('contact').scrollIntoView({
+                behavior: 'smooth'
+            });
+
+            // Wacht even tot het scrollen voorbij is en stel dan de selectie in
+            setTimeout(() => {
+                if (contactFormServiceSelect) {
+                    // Zoek de optie die overeenkomt met de gekozen dienstnaam
+                    for (let i = 0; i < contactFormServiceSelect.options.length; i++) {
+                        if (contactFormServiceSelect.options[i].value === serviceName) {
+                            contactFormServiceSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    // Optioneel: focus op het geselecteerde veld
+                    contactFormServiceSelect.focus();
+                }
+            }, 500); // Korte vertraging zodat het scrollen eerst kan plaatsvinden
+        });
+    });
+
+    // Let op: De code voor het afhandelen van het contactformulier via JavaScript is nog steeds verwijderd,
+    // Formspree regelt de verzending.
 });

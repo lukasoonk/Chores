@@ -1,11 +1,13 @@
 :root {
-    --primary-color: #4CAF50; /* Fris Groen - primair accent */
-    --secondary-color: #2196F3; /* Levendig Blauw - voor highlights */
-    --light-bg: #E8F5E9; /* donker groen - achtergrond */
-    --dark-text: #333;
-    --light-text: #666;
+    --primary-green: #388E3C; /* Dieper, professioneel groen */
+    --accent-blue: #1976D2; /* Helder, betrouwbaar blauw */
+    --light-grey: #F5F5F5; /* Zachte achtergrond */
+    --dark-text: #212121;
+    --medium-text: #424242;
+    --light-text: #757575;
     --white: #FFFFFF;
-    --shadow-subtle: rgba(0, 0, 0, 0.1);
+    --shadow-soft: rgba(0, 0, 0, 0.08);
+    --shadow-strong: rgba(0, 0, 0, 0.15);
 }
 
 * {
@@ -15,10 +17,10 @@
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    line-height: 1.7;
+    font-family: 'Open Sans', sans-serif; /* Open Sans voor body-tekst */
+    line-height: 1.6;
     color: var(--dark-text);
-    background-color: var(--light-bg);
+    background-color: var(--light-grey);
 }
 
 html {
@@ -27,10 +29,10 @@ html {
 
 /* Header and Navigation */
 header {
-    background-color: var(--primary-color);
+    background-color: var(--primary-green);
     color: var(--white);
-    padding: 1rem 0;
-    box-shadow: 0 4px 8px var(--shadow-subtle);
+    padding: 1.2rem 0;
+    box-shadow: 0 3px 8px var(--shadow-strong);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -46,9 +48,10 @@ nav {
 }
 
 .logo {
-    font-size: 2rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.2rem;
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
 
 .nav-links {
@@ -57,18 +60,35 @@ nav {
 }
 
 .nav-links li {
-    margin-left: 2.5rem;
+    margin-left: 2.8rem;
 }
 
 .nav-links a {
     color: var(--white);
     text-decoration: none;
     font-weight: 600;
+    font-size: 1.05rem;
+    position: relative;
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background-color: var(--accent-blue);
+    left: 0;
+    bottom: -8px;
+    transition: width 0.3s ease-out;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
 .nav-links a:hover {
-    color: var(--secondary-color);
+    color: var(--white); /* Kleur blijft wit, nadruk op de underline */
     transform: translateY(-2px);
 }
 
@@ -87,20 +107,19 @@ nav {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-blue) 100%);
     color: var(--white);
     text-align: center;
-    padding: 6rem 2rem;
+    padding: 7rem 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 70vh;
+    min-height: 75vh;
     position: relative;
-    overflow: hidden; /* Om de animatie binnen de sectie te houden */
+    overflow: hidden;
 }
 
-/* Dynamiek: Subtiele achtergrondanimatie */
 .hero::before {
     content: '';
     position: absolute;
@@ -109,8 +128,8 @@ nav {
     width: 200%;
     height: 200%;
     background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-    animation: rotateBackground 25s linear infinite;
-    opacity: 0.3;
+    animation: rotateBackground 28s linear infinite;
+    opacity: 0.25;
 }
 
 @keyframes rotateBackground {
@@ -119,72 +138,90 @@ nav {
 }
 
 .hero-content {
-    position: relative; /* Zorgt ervoor dat content boven de animatie blijft */
+    position: relative;
     z-index: 2;
-    animation: fadeInScale 1.5s ease-out forwards;
+    animation: fadeInScale 1.8s ease-out forwards;
 }
 
 @keyframes fadeInScale {
     from {
         opacity: 0;
-        transform: scale(0.9);
+        transform: scale(0.95) translateY(20px);
     }
     to {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) translateY(0);
     }
 }
 
 .hero h1 {
-    font-size: 3.8rem;
-    margin-bottom: 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4rem;
+    margin-bottom: 1.8rem;
     line-height: 1.1;
     font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
 }
 
 .hero p {
-    font-size: 1.4rem;
-    margin-bottom: 3rem;
+    font-size: 1.5rem;
+    margin-bottom: 3.5rem;
     font-weight: 400;
+    max-width: 800px;
 }
 
 .button {
     display: inline-block;
     background-color: var(--white);
-    color: var(--primary-color);
-    padding: 1rem 2.5rem;
-    border-radius: 50px; /* Meer afgerond */
+    color: var(--primary-green);
+    padding: 1.2rem 3rem;
+    border-radius: 50px;
     text-decoration: none;
     font-weight: 700;
-    font-size: 1.1rem;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    font-size: 1.15rem;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
 .button:hover {
-    background-color: var(--dark-text);
+    background-color: var(--accent-blue);
     color: var(--white);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
 }
 
 /* Sections General */
 section {
-    padding: 5rem 2rem;
+    padding: 6rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative; /* Voor de scheidingslijn */
 }
 
 section:nth-of-type(even) {
     background-color: var(--white);
 }
 
+/* Scheidingslijn tussen secties */
+section:not(:last-of-type)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 800px;
+    height: 1px;
+    background-color: #e0e0e0;
+}
+
+
 h2 {
-    font-size: 3rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5rem;
     text-align: center;
-    margin-bottom: 4rem;
-    color: var(--primary-color);
+    margin-bottom: 4.5rem;
+    color: var(--dark-text);
     font-weight: 700;
     position: relative;
 }
@@ -192,118 +229,146 @@ h2 {
 h2::after {
     content: '';
     display: block;
-    width: 60px;
-    height: 4px;
-    background-color: var(--secondary-color);
-    margin: 1rem auto 0;
-    border-radius: 2px;
+    width: 80px;
+    height: 5px;
+    background-color: var(--accent-blue);
+    margin: 1.2rem auto 0;
+    border-radius: 3px;
 }
 
 /* Services Section */
 .services {
     text-align: center;
+    background-color: var(--light-grey);
 }
 
 .service-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2.5rem;
-    margin-bottom: 3rem;
+    gap: 3rem;
+    margin-bottom: 3.5rem;
 }
 
 .service-item {
     background-color: var(--white);
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 6px 15px var(--shadow-subtle);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    text-align: left;
-    opacity: 0; /* Initieel verborgen voor fade-in */
-    transform: translateY(20px); /* Initieel iets naar beneden */
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px var(--shadow-soft);
+    transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.3s ease;
+    text-align: center; /* Centreer inhoud inclusief iconen */
+    text-decoration: none; /* Verwijder underline van link */
+    color: var(--dark-text); /* Zorg dat tekstkleur behouden blijft */
+    opacity: 0;
+    transform: translateY(30px);
 }
 
-/* Dynamiek: Fade-in op scroll */
 .service-item.fade-in.visible {
     opacity: 1;
     transform: translateY(0);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-
 .service-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(-15px);
+    box-shadow: 0 12px 30px var(--shadow-strong);
+    background-color: rgba(var(--accent-blue), 0.05); /* Zeer lichte blauwe tint bij hover */
+}
+
+.service-item i {
+    font-size: 3.5rem; /* Grotere iconen */
+    color: var(--accent-blue);
+    margin-bottom: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.service-item:hover i {
+    color: var(--primary-green); /* Kleurverandering van icoon bij hover */
 }
 
 .service-item h3 {
-    color: var(--secondary-color);
-    margin-bottom: 1.2rem;
-    font-size: 1.8rem;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--dark-text);
+    margin-bottom: 1rem;
+    font-size: 2rem;
     font-weight: 600;
 }
 
 .service-item p {
-    color: var(--light-text);
-    margin-bottom: 1.5rem;
-    font-size: 1.05rem;
+    color: var(--medium-text);
+    margin-bottom: 1.8rem;
+    font-size: 1.1rem;
+    min-height: 70px; /* Zorgt voor consistente hoogte als beschrijvingen verschillen */
 }
 
 .service-item span {
     font-weight: 700;
-    color: var(--primary-color);
-    font-size: 1.2rem;
+    color: var(--primary-green);
+    font-size: 1.3rem;
     display: block;
     margin-top: 1rem;
 }
 
 .negotiable-prices {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 600;
-    color: var(--primary-color);
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background-color: rgba(76, 175, 80, 0.1); /* Lichte transparante groene achtergrond */
-    border-left: 5px solid var(--primary-color);
-    border-radius: 8px;
-    display: inline-block; /* Zorgt dat de achtergrond om de tekst past */
+    color: var(--primary-green);
+    margin-top: 3rem;
+    padding: 1.8rem;
+    background-color: rgba(56, 142, 60, 0.1);
+    border-left: 6px solid var(--primary-green);
+    border-radius: 10px;
+    display: inline-block;
+    max-width: 800px;
+    line-height: 1.5;
 }
 
 /* About Section */
 .about {
     text-align: center;
+    background-color: var(--white);
 }
 
-.about p {
-    font-size: 1.15rem;
-    line-height: 1.8;
+.about-content {
     max-width: 900px;
     margin: 0 auto;
-    color: var(--light-text);
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--medium-text);
+    text-align: justify; /* Ligt uitlijnen van de tekst */
+    text-justify: inter-word;
+}
+
+.about-content p + p {
+    margin-top: 1.5rem;
 }
 
 /* Contact Section */
 .contact {
     text-align: center;
+    background-color: var(--light-grey);
 }
 
 .contact p {
-    margin-bottom: 2.5rem;
-    color: var(--light-text);
-    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    color: var(--medium-text);
+    font-size: 1.15rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #contactForm {
     background-color: var(--white);
-    padding: 3rem;
-    border-radius: 12px;
-    box-shadow: 0 6px 15px var(--shadow-subtle);
-    max-width: 650px;
+    padding: 3.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px var(--shadow-soft);
+    max-width: 700px;
     margin: 0 auto;
     text-align: left;
 }
 
 .form-group {
-    margin-bottom: 2rem;
+    margin-bottom: 2.2rem;
 }
 
 .form-group label {
@@ -311,139 +376,148 @@ h2::after {
     margin-bottom: 0.8rem;
     font-weight: 600;
     color: var(--dark-text);
-    font-size: 1.1rem;
+    font-size: 1.15rem;
 }
 
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group select {
     width: 100%;
-    padding: 1rem;
+    padding: 1.1rem;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 1.1rem;
     color: var(--dark-text);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fcfcfc;
 }
 
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.2);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 5px rgba(25, 118, 210, 0.2);
 }
 
 #contactForm .button {
     width: 100%;
-    padding: 1.2rem;
-    font-size: 1.2rem;
+    padding: 1.3rem;
+    font-size: 1.25rem;
     cursor: pointer;
     border: none;
     color: var(--white);
-    background-color: var(--primary-color);
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    background-color: var(--primary-green);
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 #contactForm .button:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--accent-blue);
     transform: translateY(-3px);
-}
-
-.form-message {
-    margin-top: 2rem;
-    font-weight: 600;
-    font-size: 1.1rem;
-    text-align: center;
-    padding: 1rem;
-    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
 }
 
 /* Footer */
 footer {
     background-color: var(--dark-text);
-    color: var(--white);
+    color: var(--light-grey);
     text-align: center;
-    padding: 2rem 0;
+    padding: 2.5rem 0;
     font-size: 0.95rem;
-    margin-top: 3rem;
+    margin-top: 4rem; /* Meer ruimte boven footer */
 }
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
     .hero {
-        padding: 4rem 1.5rem;
-        min-height: 50vh;
+        padding: 5rem 1.5rem;
+        min-height: 60vh;
     }
 
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: 3rem;
     }
 
     .hero p {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
 
     h2 {
-        font-size: 2.2rem;
-        margin-bottom: 3rem;
+        font-size: 2.8rem;
+        margin-bottom: 3.5rem;
     }
 
     section {
-        padding: 3rem 1.5rem;
+        padding: 4rem 1.5rem;
+    }
+
+    .logo {
+        font-size: 1.8rem;
+    }
+
+    .nav-links li {
+        margin-left: 2rem;
     }
 
     /* Navigation */
     .nav-links {
-        position: fixed;
-        right: 0;
-        top: 0;
-        height: 100vh;
-        background-color: var(--primary-color);
-        flex-direction: column;
-        align-items: center;
-        width: 70%; /* Iets breder voor mobiel menu */
-        transform: translateX(100%);
-        transition: transform 0.5s ease-in-out;
-        z-index: 999;
-        padding-top: 6rem; /* Meer ruimte bovenaan */
-        box-shadow: -4px 0 10px rgba(0,0,0,0.15);
+        width: 75%;
+        padding-top: 7rem;
     }
 
     .nav-links li {
-        opacity: 0;
-        margin: 2rem 0;
+        margin: 2.5rem 0;
     }
 
-    .nav-links.nav-active {
-        transform: translateX(0%);
+    .burger div {
+        width: 25px;
+        margin: 5px;
     }
 
-    .burger {
-        display: block;
-    }
-
-    /* Burger Animation */
     .toggle .line1 {
-        transform: rotate(-45deg) translate(-7px, 7px);
+        transform: rotate(-45deg) translate(-5px, 6px);
     }
     .toggle .line2 {
         opacity: 0;
     }
     .toggle .line3 {
-        transform: rotate(45deg) translate(-7px, -7px);
+        transform: rotate(45deg) translate(-5px, -6px);
     }
 
     /* Service Grid */
     .service-grid {
         grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
     .service-item {
         padding: 2rem;
     }
 
+    .service-item i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .service-item h3 {
+        font-size: 1.6rem;
+    }
+
+    .service-item p {
+        min-height: auto; /* Reset min-height for mobile */
+    }
+
+    .negotiable-prices {
+        font-size: 1.1rem;
+        padding: 1.2rem;
+    }
+
+    .about-content {
+        text-align: left; /* Terug naar links uitgelijnd op mobiel */
+    }
+
     #contactForm {
-        padding: 2rem;
+        padding: 2.5rem;
     }
 }
 

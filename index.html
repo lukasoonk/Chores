@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chores – Snel en Betaalbaar</title>
+    <title>Chores </title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -28,53 +29,61 @@
     <main>
         <section id="home" class="hero">
             <div class="hero-content">
-                <h1>Chores – Snel en Betaalbaar</h1>
+                <h1>Chores</h1>
                 <p>Jouw lokale hulp voor klusjes rondom huis en tuin!</p>
-                <a href="#diensten" class="button">Bekijk onze diensten</a>
+                <a href="#diensten" class="button">Ontdek Onze Diensten</a>
             </div>
         </section>
 
         <section id="diensten" class="services">
             <h2>Onze Diensten</h2>
             <div class="service-grid">
-                <div class="service-item fade-in">
+                <a href="#contact" class="service-item fade-in" data-service="Auto Wassen">
+                    <i class="fas fa-car"></i>
                     <h3>Auto Wassen (Binnen & Buiten)</h3>
-                    <p>Laat uw auto weer stralen, van dashboard tot velgen.</p>
+                    <p>Laat uw auto weer stralen, van dashboard tot velgen, met onze grondige wasservice.</p>
                     <span>Vanaf €20</span>
-                </div>
-                <div class="service-item fade-in">
+                </a>
+                <a href="#contact" class="service-item fade-in" data-service="Ramen Wassen">
+                    <i class="fas fa-hand-sparkles"></i>
                     <h3>Ramen Wassen</h3>
-                    <p>Voor een streeploos schone blik, met helder uitzicht.</p>
+                    <p>Voor een streeploos schone blik door uw ramen, zowel binnen als buiten, voor helder uitzicht.</p>
                     <span>Vanaf €15</span>
-                </div>
-                <div class="service-item fade-in">
+                </a>
+                <a href="#contact" class="service-item fade-in" data-service="Tuinwerk">
+                    <i class="fas fa-tree"></i>
                     <h3>Tuinwerk</h3>
-                    <p>Hulp bij grasmaaien, wieden, hagen knippen en meer.</p>
+                    <p>Hulp bij grasmaaien, wieden, hagen knippen, blad ruimen en andere tuinklusjes. Jouw tuin, onze zorg!</p>
                     <span>Vanaf €12/uur</span>
-                </div>
-                <div class="service-item fade-in">
+                </a>
+                <a href="#contact" class="service-item fade-in" data-service="Honden Uitlaten">
+                    <i class="fas fa-dog"></i>
                     <h3>Honden Uitlaten</h3>
-                    <p>Uw trouwe viervoeter geniet van een fijne, actieve wandeling.</p>
+                    <p>Uw trouwe viervoeter geniet van een fijne, actieve wandeling in de buurt. Wij zorgen voor de beweging!</p>
                     <span>Vanaf €5 per wandeling</span>
-                </div>
-                <div class="service-item fade-in">
+                </a>
+                <a href="#contact" class="service-item fade-in" data-service="Boodschappen">
+                    <i class="fas fa-shopping-basket"></i>
                     <h3>Boodschappen</h3>
-                    <p>Snel en efficiënt uw boodschappen gehaald en gebracht.</p>
+                    <p>Snel en efficiënt uw boodschappen gehaald en tot aan de deur gebracht. Geen gedoe, gewoon gemak.</p>
                     <span>Vanaf €15</span>
-                </div>
+                </a>
             </div>
             <p class="negotiable-prices">Prijzen zijn **onderhandelbaar**! Neem contact op voor een offerte op maat.</p>
         </section>
 
         <section id="over-mij" class="about">
             <h2>Over Ons</h2>
-            <p>Hallo! Ik ben Lukas, 16 jaar, en samen met een paar vrienden run ik "Chores" deze zomer in mijn buurt. Wij bieden vriendelijke en betaalbare hulp voor allerlei klusjes. Ons doel is om jou te ontlasten, zodat jij meer tijd hebt voor de leuke dingen in het leven, en wij een centje kunnen bijverdienen. We zijn flexibel en werken hard om je klus naar tevredenheid af te ronden!</p>
+            <div class="about-content">
+                <p>Hallo! Wij zijn het team achter "Chores". Ik ben Lukas, 16 jaar, en samen met een paar gemotiveerde vrienden run ik deze zomer onze lokale klussendienst. Wij geloven in het leveren van **betrouwbare, vriendelijke en betaalbare hulp** voor allerlei klusjes in en rondom huis. </p>
+                <p>Ons doel is simpel: jou te ontlasten, zodat jij meer tijd hebt voor de leuke dingen in het leven, terwijl wij een centje kunnen bijverdienen en waardevolle ervaring opdoen. We zijn flexibel, werken met een glimlach en zetten ons volledig in om elke klus naar jouw volle tevredenheid af te ronden. Vertrouw op Chores voor een schone auto, een opgeruimde tuin of een vrolijke hond!</p>
+            </div>
         </section>
 
         <section id="contact" class="contact">
             <h2>Contacteer Chores</h2>
             <p>Heb je een klus voor ons? Vul het formulier in en we nemen zo snel mogelijk contact met je op!</p>
-            <form action="https://formspree.io/f/xwpbqvov" method="POST">
+            <form action="https://formspree.io/f/xwpbqvov" method="POST" id="contactForm">
                 <div class="form-group">
                     <label for="name">Naam:</label>
                     <input type="text" id="name" name="Naam" required>
@@ -91,16 +100,16 @@
                     <label for="service">Gewenste Dienst:</label>
                     <select id="service" name="Gewenste_Dienst" required>
                         <option value="">Kies een dienst</option>
-                        <option value="Auto wassen">Auto Wassen</option>
-                        <option value="Ramen wassen">Ramen Wassen</option>
+                        <option value="Auto Wassen">Auto Wassen (Binnen & Buiten)</option>
+                        <option value="Ramen Wassen">Ramen Wassen</option>
                         <option value="Tuinwerk">Tuinwerk</option>
-                        <option value="Honden uitlaten">Honden Uitlaten</option>
-                        <option value="Boodschappen">Boodschappen</option>
+                        <option value="Honden Uitlaten">Honden Uitlaten</option>
+                        <option value="Boodschappendienst">Boodschappendienst</option>
                     </select>
                 </div>
                 <button type="submit" class="button">Verzend Aanvraag</button>
             </form>
-            </section>
+        </section>
     </main>
 
     <footer>
