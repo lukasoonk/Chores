@@ -3,11 +3,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
     const serviceItems = document.querySelectorAll('.service-item');
-    const contactFormServiceSelect = document.getElementById('service'); // Select-element van het contactformulier
+    const contactFormServiceSelect = document.getElementById('service');
+    const header = document.querySelector('header');
+    // Selecteer alle secties BEHALVE de hero sectie voor de fade-in animaties
+    const sectionsToAnimate = document.querySelectorAll('section:not(#home)');
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    const contactForm = document.getElementById('contactForm');
+    const formSubmitButton = contactForm ? contactForm.querySelector('.button[type="submit"]') : null;
+    const negotiablePricesBanner = document.querySelector('.negotiable-prices');
 
-    // Toggle Nav (Mobiel menu)
+    // --- Header Dynamiek bij Scroll ---
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 80) { // Na 80px scrollen wordt de klasse toegevoegd
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+
+        // --- 'Terug naar Boven' knop zichtbaarheid ---
+        if (window.scrollY > 400) { // Toon knop na 400px scrollen
+            backToTopBtn.classList.add('visible'); // Gebruik klasse voor animatie
+        } else {
+            backToTopBtn.classList.remove('visible'); // Gebruik klasse voor animatie
+        }
+    });
+
+    // --- 'Terug naar Boven' knop functionaliteit ---
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // --- Toggle Nav (Mobiel menu) ---
     burger.addEventListener('click', () => {
         nav.classList.toggle('nav-active');
+        burger.classList.toggle('toggle'); // Transformeert burger icoon
+
+        const expanded = burger.getAttribute('aria-expanded') === 'true' || false;
+        burger.setAttribute('aria-expanded', !expanded);
 
         navLinks.forEach((link, index) => {
             if (link.style.animation) {
@@ -16,71 +51,111 @@ document.addEventListener('DOMContentLoaded', () => {
                 link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
             }
         });
-
-        burger.classList.toggle('toggle');
     });
 
-    // Close nav when a link is clicked (for mobile)
+    // --- Sluit navigatie wanneer een link wordt geklikt (voor mobiel) ---
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             nav.classList.remove('nav-active');
             burger.classList.remove('toggle');
+            burger.setAttribute('aria-expanded', 'false');
+
             navLinks.forEach(item => {
                 item.style.animation = '';
             });
         });
     });
 
-    // Dynamiek: Observer voor fade-in animatie van diensten
+    // --- Dynamiek: IntersectionObserver voor fade-in animatie van secties en diensten ---
     const observerOptions = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.1
+        threshold: 0.1 // Activeer wanneer 10% van het element zichtbaar is
     };
 
-    const serviceObserver = new IntersectionObserver((entries, observer) => {
+    const sectionObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
+                entry.target.classList.add('visible'); // Voeg 'visible' class toe voor animatie
+                observer.unobserve(entry.target); // Stop observatie nadat animatie is uitgevoerd
             }
         });
     }, observerOptions);
 
-    serviceItems.forEach(item => {
-        serviceObserver.observe(item);
+    // Observeer ALLE secties behalve de home sectie
+    sectionsToAnimate.forEach(sec => {
+        sectionObserver.observe(sec);
     });
 
-    // NIEUWE FUNCTIONALITEIT: Klik op dienst om naar contactformulier te springen en dienst te selecteren
+    // Observeer service-items apart, ze kunnen een andere timing/trigger nodig hebben
+    serviceItems.forEach(item => {
+        sectionObserver.observe(item); // Ze krijgen dezelfde observer als secties voor consistentie
+    });
+
+
+    // --- Sticky Banner Animatie (Prijzen onderhandelbaar) ---
+    if (negotiablePricesBanner) {
+        const stickyBannerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const bannerRect = entry.boundingClientRect;
+                const headerHeight = header.offsetHeight; // Dynamisch de hoogte van de header ophalen
+
+                // Controleer of de banner de 'sticky' positie bereikt heeft
+                // Hiervoor kijken we of de bovenkant van de banner de hoogte van de header benadert
+                // en of het element in beeld is.
+                if (bannerRect.top <= headerHeight + 10 && entry.isIntersecting) { // +10px marge
+                    negotiablePricesBanner.classList.add('sticky-active');
+                } else {
+                    negotiablePricesBanner.classList.remove('sticky-active');
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: `-${header.offsetHeight}px 0px 0px 0px`, // De margin wordt negatief ingesteld op de hoogte van de header
+            threshold: [0, 0.5, 1.0] // Observer trigger wanneer 0%, 50% of 100% zichtbaar is
+        });
+
+        stickyBannerObserver.observe(negotiablePricesBanner);
+    }
+
+
+    // --- Klik op dienst om naar contactformulier te springen en dienst te selecteren ---
     serviceItems.forEach(item => {
         item.addEventListener('click', (event) => {
-            // Voorkom standaard ankergedrag als de browser traag is
             event.preventDefault();
 
-            const serviceName = item.dataset.service; // Haal de dienstnaam op uit data-service attribuut
+            const serviceName = item.dataset.service;
 
-            // Scroll naar het contactformulier
+            // Scroll soepel naar de contact sectie
             document.getElementById('contact').scrollIntoView({
                 behavior: 'smooth'
             });
 
-            // Wacht even tot het scrollen voorbij is en stel dan de selectie in
+            // Wacht tot het scrollen is voltooid en selecteer dan de dienst
             setTimeout(() => {
                 if (contactFormServiceSelect) {
-                    // Zoek de optie die overeenkomt met de gekozen dienstnaam
-                    for (let i = 0; i < contactFormServiceSelect.options.length; i++) {
-                        if (contactFormServiceSelect.options[i].value === serviceName) {
-                            contactFormServiceSelect.selectedIndex = i;
-                            break;
-                        }
+                    // Zoek de juiste optie op basis van de 'value'
+                    const optionToSelect = Array.from(contactFormServiceSelect.options).find(
+                        option => option.value === serviceName
+                    );
+                    if (optionToSelect) {
+                        contactFormServiceSelect.value = serviceName; // Stel de waarde in
+                        contactFormServiceSelect.focus(); // Optioneel: focus op het geselecteerde veld
                     }
-                    // Optioneel: focus op het geselecteerde veld
-                    contactFormServiceSelect.focus();
                 }
-            }, 500); // Korte vertraging zodat het scrollen eerst kan plaatsvinden
+            }, 700); // Iets langere vertraging (bijv. 700ms) om scrollen te voltooien
         });
     });
 
-    // Let op: De code voor het afhandelen van het contactformulier via JavaScript is nog steeds verwijderd,
-    // Formspree regelt de verzending.
+    // --- Formulier Feedback na verzending (Formspree) ---
+    if (contactForm) {
+        contactForm.addEventListener('submit', () => {
+            if (formSubmitButton) {
+                formSubmitButton.disabled = true;
+                formSubmitButton.textContent = 'Verzenden...';
+                // Hier zou je eventueel een visuele indicator/spinner kunnen toevoegen
+            }
+        });
+    }
+
 });
