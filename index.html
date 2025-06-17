@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chores – Snel en Betaalbaar</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Chores</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#diensten">Diensten</a></li>
+                <li><a href="#over-mij">Over Ons</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Chores – Snel en Betaalbaar</h1>
+                <p>Jouw lokale hulp voor klusjes rondom huis en tuin!</p>
+                <a href="#diensten" class="button">Bekijk onze diensten</a>
+            </div>
+        </section>
+
+        <section id="diensten" class="services">
+            <h2>Onze Diensten</h2>
+            <div class="service-grid">
+                <div class="service-item fade-in">
+                    <h3>Auto Wassen (Binnen & Buiten)</h3>
+                    <p>Laat uw auto weer stralen, van dashboard tot velgen.</p>
+                    <span>Vanaf €20</span>
+                </div>
+                <div class="service-item fade-in">
+                    <h3>Ramen Wassen</h3>
+                    <p>Voor een streeploos schone blik, met helder uitzicht.</p>
+                    <span>Vanaf €15</span>
+                </div>
+                <div class="service-item fade-in">
+                    <h3>Tuinwerk</h3>
+                    <p>Hulp bij grasmaaien, wieden, hagen knippen en meer.</p>
+                    <span>Vanaf €12/uur</span>
+                </div>
+                <div class="service-item fade-in">
+                    <h3>Honden Uitlaten</h3>
+                    <p>Uw trouwe viervoeter geniet van een fijne, actieve wandeling.</p>
+                    <span>Vanaf €5 per wandeling</span>
+                </div>
+                <div class="service-item fade-in">
+                    <h3>Boodschappen</h3>
+                    <p>Snel en efficiënt uw boodschappen gehaald en gebracht.</p>
+                    <span>Vanaf €15</span>
+                </div>
+            </div>
+            <p class="negotiable-prices">Prijzen zijn **onderhandelbaar**! Neem contact op voor een offerte op maat.</p>
+        </section>
+
+        <section id="over-mij" class="about">
+            <h2>Over Ons</h2>
+            <p>Hallo! Ik ben Lukas, 16 jaar, en samen met een paar vrienden run ik "Chores" deze zomer in mijn buurt. Wij bieden vriendelijke en betaalbare hulp voor allerlei klusjes. Ons doel is om jou te ontlasten, zodat jij meer tijd hebt voor de leuke dingen in het leven, en wij een centje kunnen bijverdienen. We zijn flexibel en werken hard om je klus naar tevredenheid af te ronden!</p>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2>Contacteer Chores</h2>
+            <p>Heb je een klus voor ons? Vul het formulier in en we nemen zo snel mogelijk contact met je op!</p>
+            <form action="https://formspree.io/f/xwpbqvov" method="POST">
+                <div class="form-group">
+                    <label for="name">Naam:</label>
+                    <input type="text" id="name" name="Naam" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Adres:</label>
+                    <input type="text" id="address" name="Adres" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="E-mail" required>
+                </div>
+                <div class="form-group">
+                    <label for="service">Gewenste Dienst:</label>
+                    <select id="service" name="Gewenste_Dienst" required>
+                        <option value="">Kies een dienst</option>
+                        <option value="Auto wassen">Auto Wassen</option>
+                        <option value="Ramen wassen">Ramen Wassen</option>
+                        <option value="Tuinwerk">Tuinwerk</option>
+                        <option value="Honden uitlaten">Honden Uitlaten</option>
+                        <option value="Boodschappen">Boodschappen</option>
+                    </select>
+                </div>
+                <button type="submit" class="button">Verzend Aanvraag</button>
+            </form>
+            </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Chores. Alle rechten voorbehouden.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
