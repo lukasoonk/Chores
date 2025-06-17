@@ -36,6 +36,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
+    transition: all 0.3s ease; /* Toegevoegd voor soepele overgang bij scroll */
 }
 
 nav {
@@ -52,6 +53,7 @@ nav {
     font-size: 2.2rem;
     font-weight: 700;
     letter-spacing: 0.5px;
+    transition: font-size 0.3s ease; /* Toegevoegd voor soepele overgang bij scroll */
 }
 
 .nav-links {
@@ -69,7 +71,7 @@ nav {
     font-weight: 600;
     font-size: 1.05rem;
     position: relative;
-    transition: color 0.3s ease, transform 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease, font-size 0.3s ease; /* font-size toegevoegd */
 }
 
 .nav-links a::after {
@@ -83,13 +85,16 @@ nav {
     transition: width 0.3s ease-out;
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover::after,
+.nav-links a:focus::after { /* Focus staat toegevoegd */
     width: 100%;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a:focus { /* Focus staat toegevoegd */
     color: var(--white); /* Kleur blijft wit, nadruk op de underline */
     transform: translateY(-2px);
+    outline: none; /* Verwijder standaard focus outline, want custom outline wordt gebruikt */
 }
 
 .burger {
@@ -105,7 +110,22 @@ nav {
     transition: all 0.3s ease;
 }
 
-/* Hero Section */
+/* Header smaller on scroll */
+header.scrolled {
+    padding: 0.8rem 0; /* Minder padding */
+    background-color: var(--dark-text); /* Donkere achtergrond (of een andere kleur) */
+    box-shadow: 0 4px 15px var(--shadow-strong);
+}
+
+header.scrolled .logo {
+    font-size: 1.8rem; /* Logo kleiner */
+}
+
+header.scrolled .nav-links a {
+    font-size: 0.95rem; /* Nav links kleiner */
+}
+
+/* Hero Section - Aangepast voor Parallax */
 .hero {
     background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-blue) 100%);
     color: var(--white);
@@ -118,6 +138,10 @@ nav {
     min-height: 75vh;
     position: relative;
     overflow: hidden;
+    /* NIEUW: Deze twee regels maken het een vaste achtergrond voor parallax */
+    background-attachment: fixed; /* Zorgt dat de achtergrond vast blijft staan */
+    background-size: cover; /* Zorgt dat de achtergrond de hele sectie bedekt */
+    background-position: center; /* Zorgt dat de achtergrond gecentreerd is */
 }
 
 .hero::before {
@@ -181,6 +205,7 @@ nav {
     font-size: 1.15rem;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    border: none; /* Zorg dat er geen standaard rand is die focus kan verstoren */
 }
 
 .button:hover {
@@ -190,13 +215,36 @@ nav {
     box-shadow: 0 10px 20px rgba(0,0,0,0.25);
 }
 
+.button:focus { /* Focus staat toegevoegd */
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 3px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+
+
 /* Sections General */
 section {
     padding: 6rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
-    position: relative; /* Voor de scheidingslijn */
+    position: relative;
+    /* Pas deze aan voor een meer dramatische beginstaat */
+    opacity: 0;
+    transform: translateY(100px) scale(0.95); /* Komt van onder en schaalt op */
+    transition: opacity 1.2s ease-out, transform 1.2s ease-out; /* Langere, vloeiendere transitie */
 }
+
+/* De hero sectie moet direct zichtbaar zijn, dus die krijgt geen initiële 'opacity: 0' via deze selector */
+#home.hero {
+    opacity: 1; /* Zorg dat de homepage altijd direct zichtbaar is */
+    transform: translateY(0) scale(1);
+}
+
+section.visible { /* Klasse die door JS wordt toegevoegd */
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
 
 section:nth-of-type(even) {
     background-color: var(--white);
@@ -258,20 +306,31 @@ h2::after {
     text-align: center; /* Centreer inhoud inclusief iconen */
     text-decoration: none; /* Verwijder underline van link */
     color: var(--dark-text); /* Zorg dat tekstkleur behouden blijft */
+    /* Pas deze aan voor een meer dramatische beginstaat */
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(80px) rotateX(-15deg); /* Komt van onder en roteert een beetje */
 }
 
+/* Zorg dat service-items de animatie krijgen wanneer hun bovenliggende sectie zichtbaar is */
 .service-item.fade-in.visible {
     opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    transform: translateY(0) rotateX(0deg);
+    /* Langere, vloeiendere transitie voor de service-items */
+    transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Cubic-bezier voor unieker gevoel */
 }
+
 
 .service-item:hover {
     transform: translateY(-15px);
     box-shadow: 0 12px 30px var(--shadow-strong);
     background-color: rgba(var(--accent-blue), 0.05); /* Zeer lichte blauwe tint bij hover */
+}
+
+.service-item:focus { /* Focus staat toegevoegd */
+    outline: 2px solid var(--primary-green);
+    outline-offset: 4px;
+    transform: translateY(-15px);
+    box-shadow: 0 12px 30px var(--shadow-strong);
 }
 
 .service-item i {
@@ -281,8 +340,9 @@ h2::after {
     transition: color 0.3s ease;
 }
 
-.service-item:hover i {
-    color: var(--primary-green); /* Kleurverandering van icoon bij hover */
+.service-item:hover i,
+.service-item:focus i { /* Focus staat toegevoegd */
+    color: var(--primary-green); /* Kleurverandering van icoon bij hover/focus */
 }
 
 .service-item h3 {
@@ -320,6 +380,20 @@ h2::after {
     display: inline-block;
     max-width: 800px;
     line-height: 1.5;
+    /* NIEUW: Maak het sticky en geef het een transitiestijl */
+    position: sticky; /* Wordt sticky */
+    top: 100px; /* Plakt vast 100px van bovenaf, rekening houdend met de header */
+    z-index: 50; /* Zorg dat het boven content ligt, maar onder de header */
+    transition: all 0.5s ease-in-out; /* Voor animaties */
+}
+
+/* NIEUW: Stijl voor wanneer de banner 'vastplakt' en meer aandacht krijgt */
+.negotiable-prices.sticky-active {
+    background-color: var(--primary-green); /* Wordt groen */
+    color: var(--white); /* Tekst wit */
+    transform: scale(1.05); /* Iets groter */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* Duidelijkere schaduw */
+    border-left: 6px solid var(--accent-blue); /* Blauwe rand */
 }
 
 /* About Section */
@@ -404,7 +478,6 @@ h2::after {
     padding: 1.3rem;
     font-size: 1.25rem;
     cursor: pointer;
-    border: none;
     color: var(--white);
     background-color: var(--primary-green);
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
@@ -425,6 +498,66 @@ footer {
     padding: 2.5rem 0;
     font-size: 0.95rem;
     margin-top: 4rem; /* Meer ruimte boven footer */
+}
+
+/* Back to Top Button */
+.back-to-top {
+    /* display: none; /* <-- DEZE REGEL VERWIJDEREN OF UITCOMMENTARIËREN */
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--accent-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease; /* Voeg visibility toe */
+    z-index: 999;
+    opacity: 0; /* Initieel onzichtbaar */
+    visibility: hidden; /* Initieel niet klikbaar en verborgen */
+    pointer-events: none; /* Voorkomt interactie wanneer verborgen */
+}
+
+.back-to-top.visible { /* Klasse die door JS wordt toegevoegd */
+    opacity: 1;
+    visibility: visible; /* Zichtbaar en klikbaar */
+    pointer-events: auto; /* Klikken weer mogelijk */
+}
+
+/* De rest van de styling (::after, :hover, :focus) blijft hetzelfde */
+.back-to-top::after { /* Gebruik een pseudo-element voor het pijltje */
+    content: '\2191'; /* Unicode pijl omhoog */
+    display: block;
+    line-height: 1;
+    text-align: center;
+}
+
+.back-to-top:hover {
+    background-color: var(--primary-green);
+    transform: translateY(-3px);
+    opacity: 1;
+}
+
+.back-to-top:focus {
+    outline: 2px solid var(--primary-green);
+    outline-offset: 3px;
+    background-color: var(--primary-green);
+    opacity: 1;
+}
+
+/* En voor de media query, als je daar ook een aanpassing had: */
+@media (max-width: 768px) {
+    .back-to-top {
+        width: 45px;
+        height: 45px;
+        font-size: 1.6rem;
+        bottom: 20px;
+        right: 20px;
+    }
 }
 
 /* Mobile Responsiveness */
@@ -460,20 +593,36 @@ footer {
     }
 
     /* Navigation */
+    .burger {
+        display: block; /* Burger icon zichtbaar op mobiel */
+    }
+
     .nav-links {
+        position: fixed;
+        right: 0;
+        top: 0;
+        height: 100vh;
+        background-color: var(--primary-green); /* Achtergrondkleur voor mobiele nav */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         width: 75%;
-        padding-top: 7rem;
+        transform: translateX(100%); /* Beginpositie: buiten beeld */
+        transition: transform 0.5s ease-in-out;
+        padding-top: 7rem; /* Voldoende ruimte onder header */
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3); /* Schaduw voor open menu */
+    }
+
+    .nav-links.nav-active {
+        transform: translateX(0%); /* Eindpositie: in beeld */
     }
 
     .nav-links li {
-        margin: 2.5rem 0;
+        opacity: 0; /* Links initieel onzichtbaar voor fade-in animatie */
+        margin: 2.5rem 0; /* Verticale afstand tussen links */
     }
 
-    .burger div {
-        width: 25px;
-        margin: 5px;
-    }
-
+    /* Burger Animation */
     .toggle .line1 {
         transform: rotate(-45deg) translate(-5px, 6px);
     }
@@ -510,6 +659,7 @@ footer {
     .negotiable-prices {
         font-size: 1.1rem;
         padding: 1.2rem;
+        top: 80px; /* Pas sticky top aan voor mobiel indien gewenst */
     }
 
     .about-content {
@@ -518,6 +668,14 @@ footer {
 
     #contactForm {
         padding: 2.5rem;
+    }
+
+    .back-to-top {
+        width: 45px;
+        height: 45px;
+        font-size: 1.6rem;
+        bottom: 20px;
+        right: 20px;
     }
 }
 
