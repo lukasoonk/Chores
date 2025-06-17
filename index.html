@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chores </title>
+    <title>Chores - Jouw lokale hulp voor klusjes</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -12,13 +12,13 @@
     <header>
         <nav>
             <div class="logo">Chores</div>
-            <ul class="nav-links">
+            <ul class="nav-links" id="nav-links-id" aria-live="polite">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#diensten">Diensten</a></li>
                 <li><a href="#over-mij">Over Ons</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <div class="burger">
+            <div class="burger" role="button" aria-expanded="false" aria-controls="nav-links-id" aria-label="Open navigatie menu">
                 <div class="line1"></div>
                 <div class="line2"></div>
                 <div class="line3"></div>
@@ -62,7 +62,7 @@
                     <p>Uw trouwe viervoeter geniet van een fijne, actieve wandeling in de buurt. Wij zorgen voor de beweging!</p>
                     <span>Vanaf €5 per wandeling</span>
                 </a>
-                <a href="#contact" class="service-item fade-in" data-service="Boodschappen">
+                <a href="#contact" class="service-item fade-in" data-service="Boodschappendienst">
                     <i class="fas fa-shopping-basket"></i>
                     <h3>Boodschappen</h3>
                     <p>Snel en efficiënt uw boodschappen gehaald en tot aan de deur gebracht. Geen gedoe, gewoon gemak.</p>
@@ -115,6 +115,8 @@
     <footer>
         <p>&copy; 2025 Chores. Alle rechten voorbehouden.</p>
     </footer>
+
+    <button id="backToTopBtn" class="back-to-top" aria-label="Terug naar boven"></button>
 
     <script src="script.js"></script>
 </body>
