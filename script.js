@@ -157,6 +157,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+const firebaseConfig = {
+  apiKey: "AIzaSyCs_yXbCmSRgDEoh1CRYlJPAV_xPgMMdrs",
+  authDomain: "chores-website-auth.firebaseapp.com",
+  projectId: "chores-website-auth",
+  storageBucket: "chores-website-auth.firebasestorage.app",
+  messagingSenderId: "544106397725",
+  appId: "1:544106397725:web:22b62f59096f7d0da286f4"
+};      
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 });
