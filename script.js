@@ -168,16 +168,45 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 });
+// LOGIN
 document.getElementById('login-form').addEventListener('submit', function(e) {
   e.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-password').value;
   auth.signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
+    .then(() => {
       document.getElementById('login-message').textContent = "Succesvol ingelogd!";
+      // window.location.href = "home.html"; // Optioneel: doorsturen na inloggen
     })
     .catch((error) => {
       document.getElementById('login-message').textContent = error.message;
     });
 });
+
+// REGISTREREN
+document.getElementById('register-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const email = document.getElementById('register-email').value;
+  const password = document.getElementById('register-password').value;
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      document.getElementById('register-message').textContent = "Registratie gelukt! Je kunt nu inloggen.";
+    })
+    .catch((error) => {
+      document.getElementById('register-message').textContent = error.message;
+    });
+});
+
+// Wisselen tussen login & register
+window.showRegister = function(event) {
+  event.preventDefault();
+  document.getElementById('login-form').style.display = 'none';
+  document.getElementById('register-form').style.display = 'block';
+  document.getElementById('login-message').textContent = '';
+};
+window.showLogin = function(event) {
+  event.preventDefault();
+  document.getElementById('login-form').style.display = 'block';
+  document.getElementById('register-form').style.display = 'none';
+  document.getElementById('register-message').textContent = '';
+};
