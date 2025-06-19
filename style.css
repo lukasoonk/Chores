@@ -744,3 +744,89 @@ footer {
   font-size: 1em;
   text-align: center;
 }
+/* Auth form container */
+#auth {
+  background: #fff;
+  padding: 2.5em 2em 2em 2em;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 1.5px 9px rgba(0,0,0,0.06);
+  max-width: 380px;
+  margin: 3em auto 2em auto;
+}
+
+/* Login/Register forms */
+#auth form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+#auth h2 {
+  text-align: center;
+  color: #2b2b2b;
+  margin-bottom: 0.5em;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/* Inputs */
+#auth input[type="email"],
+#auth input[type="password"] {
+  padding: 0.75em 1em;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  font-size: 1em;
+  background: #f9f9f9;
+  transition: border-color 0.2s;
+}
+#auth input:focus {
+  border-color: #008cff;
+  outline: none;
+}
+
+/* Knoppen */
+#auth button[type="submit"] {
+  background: linear-gradient(90deg, #008cff 0%, #00cabb 100%);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 0.8em;
+  font-size: 1.06em;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.4em;
+  box-shadow: 0 2px 8px rgba(0,140,255,0.11);
+  transition: background 0.2s, transform 0.1s;
+}
+#auth button[type="submit"]:hover {
+  background: linear-gradient(90deg, #0070c6 0%, #009e88 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+
+/* Linkje om te switchen */
+#auth .switch-form {
+  text-align: center;
+  margin-top: 0.2em;
+  font-size: 0.97em;
+}
+#auth .switch-form a {
+  color: #008cff;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Feedback berichten */
+#login-message, #register-message {
+  font-size: 0.98em;
+  margin-top: 0.4em;
+  text-align: center;
+  min-height: 1.5em;
+}
+#login-message {
+  color: #e43c3c;
+}
+#register-message {
+  color: #249e4a;
+}
