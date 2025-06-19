@@ -160,3 +160,16 @@ document.addEventListener('DOMContentLoaded', () => {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 });
+document.getElementById('login-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      document.getElementById('login-message').textContent = "Succesvol ingelogd!";
+    })
+    .catch((error) => {
+      document.getElementById('login-message').textContent = error.message;
+    });
+});
