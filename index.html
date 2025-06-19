@@ -128,13 +128,27 @@
             </form>
         </section>
     </main>
-    <form id="login-form">
-  <input type="email" id="email" placeholder="E-mail" required>
-  <input type="password" id="password" placeholder="Wachtwoord" required>
-  <button type="submit">Log in</button>
-</form>
-<div id="login-message"></div>
-
+    <!-- Login & registratie blok (vervang je oude login-formulier hiermee) -->
+<section id="auth" style="max-width:400px;margin:2em auto;">
+  <!-- Login Formulier -->
+  <form id="login-form">
+    <h2>Inloggen</h2>
+    <input type="email" id="login-email" placeholder="E-mail" required>
+    <input type="password" id="login-password" placeholder="Wachtwoord" required>
+    <button type="submit">Log in</button>
+    <p>Nog geen account? <a href="#" onclick="showRegister(event)">Registreer hier</a></p>
+    <div id="login-message"></div>
+  </form>
+  <!-- Registratie Formulier, standaard verborgen -->
+  <form id="register-form" style="display:none;">
+    <h2>Registreren</h2>
+    <input type="email" id="register-email" placeholder="E-mail" required>
+    <input type="password" id="register-password" placeholder="Wachtwoord" required>
+    <button type="submit">Account aanmaken</button>
+    <p>Heb je al een account? <a href="#" onclick="showLogin(event)">Log hier in</a></p>
+    <div id="register-message"></div>
+  </form>
+</section>
     <footer>
         <p>&copy; 2025 Chores. Alle rechten voorbehouden.</p>
     </footer>
