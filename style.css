@@ -705,14 +705,16 @@ footer {
 }
 
 #login-form {
-  background: #fff;
-  padding: 2em 2.5em;
-  border-radius: 12px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  min-width: 260px;
+    background: #fff;
+    padding: 3.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    max-width: 700px;
+    margin: 0 auto;
+    min-width: 260px; /* optioneel, voor heel smalle schermen */
 }
 
 #login-form input {
