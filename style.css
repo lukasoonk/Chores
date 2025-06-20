@@ -747,15 +747,13 @@ footer {
 /* Auth form container */
 #auth {
   background: #fff;
-  padding: 2.5em 2em 2em 2em;
+  padding: 2.5em 4em 2.5em 4em;   /* Meer ruimte binnenin */
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 1.5px 9px rgba(0,0,0,0.06);
-  max-width: 520px;     /* breder! */
-  padding: 2.5em 3em 2.5em 3em; /* iets meer binnenruimte */
-}
+  max-width: 600px;               /* Echt een stuk breder! */
+  width: 100%;                    /* Voor zekerheid op kleine schermen */
   margin: 3em auto 2em auto;
 }
-
 /* Login/Register forms */
 #auth form {
   display: flex;
