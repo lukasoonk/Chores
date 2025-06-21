@@ -5,9 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chores - Jouw lokale hulp voor klusjes</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCs_yXbCmSRgDEoh1CRYlJPAV_xPgMMdrs",
+            authDomain: "chores-website-auth.firebaseapp.com",
+            projectId: "chores-website-auth",
+            storageBucket: "chores-website-auth.firebasestorage.app",
+            messagingSenderId: "544106397725",
+            appId: "1:544106397725:web:22b62f59096f7d0da286f4"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
 </head>
 <body>
     <header>
@@ -18,7 +31,7 @@
                 <li><a href="#diensten">Diensten</a></li>
                 <li><a href="#over-mij">Over Ons</a></li>
                 <li><a href="#contact">Contact</a></li>
-            </ul>
+                </ul>
             <div class="burger" role="button" aria-expanded="false" aria-controls="nav-links-id" aria-label="Open navigatie menu">
                 <div class="line1"></div>
                 <div class="line2"></div>
@@ -70,7 +83,7 @@
                     <span>Vanaf €5</span>
                 </a>
             </div>
-            <p class="negotiable-prices">Prijzen zijn onderhandelbaar! Neem contact op voor een offerte op maat.</p>
+            <p class="negotiable-prices">Prijzen zijn **onderhandelbaar**! Neem contact op voor een offerte op maat.</p>
         </section>
 
         <section id="over-mij" class="about">
@@ -109,6 +122,41 @@
                     </select>
                 </div>
                 <button type="submit" class="button">Verzend Aanvraag</button>
+            </form>
+        </section>
+
+        <section id="auth-section" class="auth-section">
+            <form id="login-form" class="auth-container">
+                <div class="auth-icon">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <h2>Inloggen</h2>
+                <div class="form-group">
+                    <label for="login-email">E-mail:</label>
+                    <input type="email" id="login-email" placeholder="uw@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Wachtwoord:</label>
+                    <input type="password" id="login-password" placeholder="********" required>
+                </div>
+                <button type="submit" class="login-button">Log in</button>
+                <p class="login-text-bottom">Nog geen account? <a href="#" onclick="showRegister(event)">Registreer hier</a></p>
+                <div id="login-feedback" class="login-feedback"></div>
+            </form>
+
+            <form id="register-form" class="auth-container hidden">
+                <h2>Registreren</h2>
+                <div class="form-group">
+                    <label for="register-email">E-mail:</label>
+                    <input type="email" id="register-email" placeholder="uw@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Wachtwoord:</label>
+                    <input type="password" id="register-password" placeholder="********" required>
+                </div>
+                <button type="submit" class="register-button">Account aanmaken</button>
+                <p class="register-text">Heb je al een account? <a href="#" onclick="showLogin(event)">Log hier in</a></p>
+                <div id="register-feedback" class="register-feedback"></div>
             </form>
         </section>
     </main>
