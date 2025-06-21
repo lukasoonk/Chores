@@ -356,9 +356,9 @@ h2::after {
     font-weight: 700;
     /* Verwijder de ::after pseudo-element als je geen onderstreping wilt bij deze H2 */
     /* Anders, voeg deze toe als je de h2 stijl van andere secties wilt volgen */
-    &::after {
-        content: none; /* Specifiek voor auth H2, geen onderstreping */
-    }
+    .auth-container h2::after {
+    content: none;
+}
 }
 
 .auth-container p {
