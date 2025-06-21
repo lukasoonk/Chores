@@ -10,6 +10,7 @@
     --shadow-strong: rgba(0, 0, 0, 0.15);
 }
 
+/* Algemene reset en basisstijlen */
 * {
     margin: 0;
     padding: 0;
@@ -17,7 +18,7 @@
 }
 
 body {
-    font-family: 'Open Sans', sans-serif; /* Open Sans voor body-tekst */
+    font-family: 'Open Sans', sans-serif;
     line-height: 1.6;
     color: var(--dark-text);
     background-color: var(--light-grey);
@@ -27,15 +28,20 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Header and Navigation */
+/* --- Utility Classes --- */
+.hidden {
+    display: none !important; /* Gebruikt door JS om secties te verbergen */
+}
+
+/* --- Header & Navigatie --- */
 header {
     background-color: var(--primary-green);
     color: var(--white);
     padding: 1.2rem 0;
     box-shadow: 0 3px 8px var(--shadow-strong);
-    position: sticky;
+    position: sticky; /* Blijft bovenaan plakken tijdens het scrollen */
     top: 0;
-    z-index: 1000;
+    z-index: 1000; /* Zorgt dat de header boven andere content ligt */
     transition: all 0.3s ease; /* Toegevoegd voor soepele overgang bij scroll */
 }
 
@@ -54,6 +60,7 @@ nav {
     font-weight: 700;
     letter-spacing: 0.5px;
     transition: font-size 0.3s ease; /* Toegevoegd voor soepele overgang bij scroll */
+    color: var(--white); /* Zorg dat het logo altijd wit is */
 }
 
 .nav-links {
@@ -71,7 +78,7 @@ nav {
     font-weight: 600;
     font-size: 1.05rem;
     position: relative;
-    transition: color 0.3s ease, transform 0.3s ease, font-size 0.3s ease; /* font-size toegevoegd */
+    transition: color 0.3s ease, transform 0.3s ease, font-size 0.3s ease;
 }
 
 .nav-links a::after {
@@ -86,34 +93,51 @@ nav {
 }
 
 .nav-links a:hover::after,
-.nav-links a:focus::after { /* Focus staat toegevoegd */
+.nav-links a:focus::after {
     width: 100%;
 }
 
 .nav-links a:hover,
-.nav-links a:focus { /* Focus staat toegevoegd */
-    color: var(--white); /* Kleur blijft wit, nadruk op de underline */
+.nav-links a:focus {
+    color: var(--white);
     transform: translateY(-2px);
-    outline: none; /* Verwijder standaard focus outline, want custom outline wordt gebruikt */
+    outline: none;
 }
 
 .burger {
-    display: none;
+    display: none; /* Standaard verborgen op desktop */
     cursor: pointer;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    z-index: 1200; /* Zorgt dat het boven nav-links ligt op mobiel */
 }
 
 .burger div {
-    width: 28px;
+    width: 100%;
     height: 3px;
     background-color: var(--white);
-    margin: 6px;
+    border-radius: 5px;
+    margin: 4px 0; /* Aangepaste margin voor betere spacing */
     transition: all 0.3s ease;
+}
+
+/* Burger Animatie (wanneer open/toggle) */
+.toggle .line1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+.toggle .line2 {
+    opacity: 0; /* Middelste lijn verdwijnt */
+}
+.toggle .line3 {
+    transform: rotate(45deg) translate(-5px, -6px);
 }
 
 /* Header smaller on scroll */
 header.scrolled {
     padding: 0.8rem 0; /* Minder padding */
-    background-color: var(--dark-text); /* Donkere achtergrond (of een andere kleur) */
+    background-color: var(--dark-text); /* Donkere achtergrond */
     box-shadow: 0 4px 15px var(--shadow-strong);
 }
 
@@ -125,7 +149,7 @@ header.scrolled .nav-links a {
     font-size: 0.95rem; /* Nav links kleiner */
 }
 
-/* Hero Section - Aangepast voor Parallax */
+/* --- Hero Section --- */
 .hero {
     background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-blue) 100%);
     color: var(--white);
@@ -138,10 +162,10 @@ header.scrolled .nav-links a {
     min-height: 75vh;
     position: relative;
     overflow: hidden;
-    /* NIEUW: Deze twee regels maken het een vaste achtergrond voor parallax */
-    background-attachment: fixed; /* Zorgt dat de achtergrond vast blijft staan */
-    background-size: cover; /* Zorgt dat de achtergrond de hele sectie bedekt */
-    background-position: center; /* Zorgt dat de achtergrond gecentreerd is */
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    /* background-image: url('pad/naar/jouw/hero-afbeelding.jpg'); */
 }
 
 .hero::before {
@@ -205,7 +229,7 @@ header.scrolled .nav-links a {
     font-size: 1.15rem;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-    border: none; /* Zorg dat er geen standaard rand is die focus kan verstoren */
+    border: none;
 }
 
 .button:hover {
@@ -215,28 +239,26 @@ header.scrolled .nav-links a {
     box-shadow: 0 10px 20px rgba(0,0,0,0.25);
 }
 
-.button:focus { /* Focus staat toegevoegd */
+.button:focus {
     outline: 2px solid var(--accent-blue);
     outline-offset: 3px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.25);
 }
 
-
-/* Sections General */
+/* --- Algemene Secties --- */
 section {
     padding: 6rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
-    /* Pas deze aan voor een meer dramatische beginstaat */
     opacity: 0;
-    transform: translateY(100px) scale(0.95); /* Komt van onder en schaalt op */
-    transition: opacity 1.2s ease-out, transform 1.2s ease-out; /* Langere, vloeiendere transitie */
+    transform: translateY(100px) scale(0.95);
+    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
 }
 
-/* De hero sectie moet direct zichtbaar zijn, dus die krijgt geen initiële 'opacity: 0' via deze selector */
+/* De hero sectie moet direct zichtbaar zijn */
 #home.hero {
-    opacity: 1; /* Zorg dat de homepage altijd direct zichtbaar is */
+    opacity: 1;
     transform: translateY(0) scale(1);
 }
 
@@ -244,7 +266,6 @@ section.visible { /* Klasse die door JS wordt toegevoegd */
     opacity: 1;
     transform: translateY(0) scale(1);
 }
-
 
 section:nth-of-type(even) {
     background-color: var(--white);
@@ -262,7 +283,6 @@ section:not(:last-of-type)::after {
     height: 1px;
     background-color: #e0e0e0;
 }
-
 
 h2 {
     font-family: 'Montserrat', sans-serif;
@@ -284,7 +304,168 @@ h2::after {
     border-radius: 3px;
 }
 
-/* Services Section */
+/* --- Authenticatie Secties (Login & Register) --- */
+.auth-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px); /* Neem headerhoogte in acht */
+    background-color: var(--light-grey); /* Achtergrond consistent met lichte secties */
+    padding: 2rem; /* Algemene padding voor de sectie */
+}
+
+.auth-container {
+    background: var(--white);
+    padding: 3.5rem;
+    border-radius: 15px; /* Ronding consistent met service items/contact form */
+    box-shadow: 0 8px 25px var(--shadow-soft); /* Zachte schaduw */
+    width: 100%;
+    max-width: 700px; /* VERHOOGDE BREEDTE VOOR FORMULIER */
+    text-align: center;
+    margin: auto; /* Centreert het containerblok */
+    transition: all 0.3s ease;
+}
+
+/* Animatie voor het verschijnen/verdwijnen van de authenticatie formulieren */
+.auth-container.hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+    position: absolute; /* Zorgt dat de verborgen vorm geen ruimte inneemt */
+}
+
+.auth-container:not(.hidden) {
+    opacity: 1;
+    transform: scale(1);
+    position: relative; /* Zorgt dat de zichtbare vorm normale positie inneemt */
+}
+
+.auth-container .auth-icon { /* Styling voor het icoontje bovenaan login/register */
+    font-size: 4rem;
+    color: var(--accent-blue);
+    margin-bottom: 1.5rem;
+    display: block;
+    text-align: center;
+}
+
+.auth-container h2 {
+    font-family: 'Montserrat', sans-serif; /* Consistent lettertype */
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--dark-text);
+    font-weight: 700;
+    /* Verwijder de ::after pseudo-element als je geen onderstreping wilt bij deze H2 */
+    /* Anders, voeg deze toe als je de h2 stijl van andere secties wilt volgen */
+    &::after {
+        content: none; /* Specifiek voor auth H2, geen onderstreping */
+    }
+}
+
+.auth-container p {
+    margin-bottom: 2.5rem;
+    color: var(--medium-text);
+    font-size: 1.1rem;
+}
+
+.form-group {
+    margin-bottom: 1.8rem; /* Consistente spacing */
+    text-align: left; /* Labels en inputs links uitlijnen */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    font-size: 1.1rem;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 1.1rem;
+    border: 1px solid #d1d5db; /* Zachte grens */
+    border-radius: 10px; /* Consistente afronding */
+    font-size: 1.1rem;
+    color: var(--dark-text);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fcfcfc; /* Zeer lichte achtergrond */
+}
+
+.form-group input:focus {
+    border-color: var(--accent-blue);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.2); /* Zachte focus-ring */
+}
+
+.error-message { /* Algemene stijl voor foutmeldingen */
+    color: #dc3545; /* Rood voor fouten */
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    min-height: 1.5em; /* Voor consistente spacing, zelfs als leeg */
+    text-align: left;
+}
+
+.login-button, .register-button {
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 1.3rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background-color: var(--primary-green);
+    color: var(--white);
+    border: none;
+    border-radius: 50px; /* Ronde knoppen, consistent met de ".button" stijl */
+    font-weight: 700;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.login-button:hover, .register-button:hover {
+    background-color: var(--accent-blue);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.login-button:focus, .register-button:focus {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 3px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.login-feedback, .register-feedback {
+    margin-top: 1.5rem;
+    font-weight: 600;
+    min-height: 1.5em; /* Consistente hoogte */
+    font-size: 1.05rem;
+    text-align: center;
+}
+.login-feedback.error, .register-feedback.error {
+    color: #dc3545;
+}
+.login-feedback:not(.error), .register-feedback:not(.error) {
+    color: var(--primary-green);
+}
+
+.register-text, .login-text-bottom {
+    margin-top: 2rem;
+    color: var(--medium-text);
+    font-size: 1rem;
+}
+
+.register-text a, .login-text-bottom a {
+    font-weight: 700;
+    color: var(--accent-blue); /* Links consistent met accentkleur */
+    text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.register-text a:hover, .login-text-bottom a:hover {
+    color: var(--primary-green); /* Hover kleur consistent */
+    text-decoration: underline;
+}
+
+/* --- Diensten Sectie --- */
 .services {
     text-align: center;
     background-color: var(--light-grey);
@@ -303,30 +484,26 @@ h2::after {
     border-radius: 15px;
     box-shadow: 0 8px 20px var(--shadow-soft);
     transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.3s ease;
-    text-align: center; /* Centreer inhoud inclusief iconen */
-    text-decoration: none; /* Verwijder underline van link */
-    color: var(--dark-text); /* Zorg dat tekstkleur behouden blijft */
-    /* Pas deze aan voor een meer dramatische beginstaat */
-    opacity: 0;
-    transform: translateY(80px) rotateX(-15deg); /* Komt van onder en roteert een beetje */
+    text-align: center;
+    text-decoration: none;
+    color: var(--dark-text);
+    opacity: 0; /* Initieel onzichtbaar voor animatie */
+    transform: translateY(80px) rotateX(-15deg); /* Startpositie voor animatie */
 }
 
-/* Zorg dat service-items de animatie krijgen wanneer hun bovenliggende sectie zichtbaar is */
-.service-item.fade-in.visible {
+.service-item.visible { /* Klasse toegevoegd door JS */
     opacity: 1;
     transform: translateY(0) rotateX(0deg);
-    /* Langere, vloeiendere transitie voor de service-items */
-    transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Cubic-bezier voor unieker gevoel */
+    transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-
 
 .service-item:hover {
     transform: translateY(-15px);
     box-shadow: 0 12px 30px var(--shadow-strong);
-    background-color: rgba(var(--accent-blue), 0.05); /* Zeer lichte blauwe tint bij hover */
+    background-color: rgba(25, 118, 210, 0.05); /* Zeer lichte blauwe tint bij hover */
 }
 
-.service-item:focus { /* Focus staat toegevoegd */
+.service-item:focus {
     outline: 2px solid var(--primary-green);
     outline-offset: 4px;
     transform: translateY(-15px);
@@ -334,15 +511,15 @@ h2::after {
 }
 
 .service-item i {
-    font-size: 3.5rem; /* Grotere iconen */
+    font-size: 3.5rem;
     color: var(--accent-blue);
     margin-bottom: 1.5rem;
     transition: color 0.3s ease;
 }
 
 .service-item:hover i,
-.service-item:focus i { /* Focus staat toegevoegd */
-    color: var(--primary-green); /* Kleurverandering van icoon bij hover/focus */
+.service-item:focus i {
+    color: var(--primary-green);
 }
 
 .service-item h3 {
@@ -380,23 +557,21 @@ h2::after {
     display: inline-block;
     max-width: 800px;
     line-height: 1.5;
-    /* NIEUW: Maak het sticky en geef het een transitiestijl */
-    position: sticky; /* Wordt sticky */
+    position: sticky;
     top: 100px; /* Plakt vast 100px van bovenaf, rekening houdend met de header */
-    z-index: 50; /* Zorg dat het boven content ligt, maar onder de header */
-    transition: all 0.5s ease-in-out; /* Voor animaties */
+    z-index: 50;
+    transition: all 0.5s ease-in-out;
 }
 
-/* NIEUW: Stijl voor wanneer de banner 'vastplakt' en meer aandacht krijgt */
 .negotiable-prices.sticky-active {
-    background-color: var(--primary-green); /* Wordt groen */
-    color: var(--white); /* Tekst wit */
-    transform: scale(1.05); /* Iets groter */
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* Duidelijkere schaduw */
-    border-left: 6px solid var(--accent-blue); /* Blauwe rand */
+    background-color: var(--primary-green);
+    color: var(--white);
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    border-left: 6px solid var(--accent-blue);
 }
 
-/* About Section */
+/* --- Over Ons Sectie --- */
 .about {
     text-align: center;
     background-color: var(--white);
@@ -408,7 +583,7 @@ h2::after {
     font-size: 1.15rem;
     line-height: 1.9;
     color: var(--medium-text);
-    text-align: justify; /* Ligt uitlijnen van de tekst */
+    text-align: justify;
     text-justify: inter-word;
 }
 
@@ -416,7 +591,7 @@ h2::after {
     margin-top: 1.5rem;
 }
 
-/* Contact Section */
+/* --- Contact Sectie --- */
 .contact {
     text-align: center;
     background-color: var(--light-grey);
@@ -436,26 +611,19 @@ h2::after {
     padding: 3.5rem;
     border-radius: 15px;
     box-shadow: 0 8px 25px var(--shadow-soft);
-    max-width: 700px;
+    max-width: 700px; /* Breedte van het contactformulier */
     margin: 0 auto;
     text-align: left;
 }
 
-.form-group {
-    margin-bottom: 2.2rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.8rem;
-    font-weight: 600;
-    color: var(--dark-text);
-    font-size: 1.15rem;
+.contact .form-group label {
+    color: var(--dark-text); /* Zorg dat labels ook donkere tekst hebben */
 }
 
 .form-group input[type="text"],
 .form-group input[type="email"],
-.form-group select {
+.form-group select,
+.form-group textarea { /* Toegevoegd: textarea voor contactformulier */
     width: 100%;
     padding: 1.1rem;
     border: 1px solid #ddd;
@@ -467,13 +635,14 @@ h2::after {
 }
 
 .form-group input:focus,
-.form-group select:focus {
+.form-group select:focus,
+.form-group textarea:focus {
     outline: none;
     border-color: var(--accent-blue);
     box-shadow: 0 0 0 5px rgba(25, 118, 210, 0.2);
 }
 
-#contactForm .button {
+#contactForm .button { /* Gebruik de algemene .button stijl voor contactformulier submit */
     width: 100%;
     padding: 1.3rem;
     font-size: 1.25rem;
@@ -490,19 +659,18 @@ h2::after {
     box-shadow: 0 6px 15px rgba(0,0,0,0.2);
 }
 
-/* Footer */
+/* --- Footer --- */
 footer {
     background-color: var(--dark-text);
     color: var(--light-grey);
     text-align: center;
     padding: 2.5rem 0;
     font-size: 0.95rem;
-    margin-top: 4rem; /* Meer ruimte boven footer */
+    margin-top: 4rem;
 }
 
-/* Back to Top Button */
+/* --- Back to Top Button --- */
 .back-to-top {
-    /* display: none; /* <-- DEZE REGEL VERWIJDEREN OF UITCOMMENTARIËREN */
     position: fixed;
     bottom: 30px;
     right: 30px;
@@ -515,20 +683,22 @@ footer {
     font-size: 1.8rem;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease; /* Voeg visibility toe */
+    transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
     z-index: 999;
     opacity: 0; /* Initieel onzichtbaar */
     visibility: hidden; /* Initieel niet klikbaar en verborgen */
     pointer-events: none; /* Voorkomt interactie wanneer verborgen */
+    display: flex; /* Zorgt dat de pijl gecentreerd is */
+    align-items: center;
+    justify-content: center;
 }
 
 .back-to-top.visible { /* Klasse die door JS wordt toegevoegd */
     opacity: 1;
-    visibility: visible; /* Zichtbaar en klikbaar */
-    pointer-events: auto; /* Klikken weer mogelijk */
+    visibility: visible;
+    pointer-events: auto;
 }
 
-/* De rest van de styling (::after, :hover, :focus) blijft hetzelfde */
 .back-to-top::after { /* Gebruik een pseudo-element voor het pijltje */
     content: '\2191'; /* Unicode pijl omhoog */
     display: block;
@@ -549,19 +719,12 @@ footer {
     opacity: 1;
 }
 
-/* En voor de media query, als je daar ook een aanpassing had: */
+/* --- Media Queries (Responsiveness) --- */
 @media (max-width: 768px) {
-    .back-to-top {
-        width: 45px;
-        height: 45px;
-        font-size: 1.6rem;
-        bottom: 20px;
-        right: 20px;
+    nav {
+        padding: 0 1.5rem;
     }
-}
 
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
     .hero {
         padding: 5rem 1.5rem;
         min-height: 60vh;
@@ -588,38 +751,35 @@ footer {
         font-size: 1.8rem;
     }
 
-    .nav-links li {
-        margin-left: 2rem;
-    }
-
     /* Navigation */
     .burger {
-        display: block; /* Burger icon zichtbaar op mobiel */
+        display: flex; /* Toon de burger op kleine schermen */
     }
 
     .nav-links {
         position: fixed;
         right: 0;
-        top: 0;
+        top: 0; /* Start bovenaan het scherm */
         height: 100vh;
         background-color: var(--primary-green); /* Achtergrondkleur voor mobiele nav */
-        display: flex;
         flex-direction: column;
         align-items: center;
-        width: 75%;
+        width: 75%; /* Neemt 75% van de breedte in beslag */
         transform: translateX(100%); /* Beginpositie: buiten beeld */
         transition: transform 0.5s ease-in-out;
         padding-top: 7rem; /* Voldoende ruimte onder header */
         box-shadow: -5px 0 15px rgba(0,0,0,0.3); /* Schaduw voor open menu */
+        z-index: 990; /* Onder de burger icon */
     }
 
     .nav-links.nav-active {
-        transform: translateX(0%); /* Eindpositie: in beeld */
+        transform: translateX(0%); /* Schuift in beeld wanneer actief */
     }
 
     .nav-links li {
         opacity: 0; /* Links initieel onzichtbaar voor fade-in animatie */
         margin: 2.5rem 0; /* Verticale afstand tussen links */
+        /* De animatie timing wordt beheerd door JS met 'navLinkFade' */
     }
 
     /* Burger Animation */
@@ -666,6 +826,11 @@ footer {
         text-align: left; /* Terug naar links uitgelijnd op mobiel */
     }
 
+    .auth-container {
+        padding: 2.5rem; /* Minder padding op kleine schermen */
+        max-width: 90%; /* Zorgt dat het niet te breed wordt op smalle schermen */
+    }
+
     #contactForm {
         padding: 2.5rem;
     }
@@ -679,7 +844,27 @@ footer {
     }
 }
 
-/* Keyframes for nav links fade in */
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .button {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+    }
+
+    .auth-container {
+        padding: 2rem;
+        max-width: 95%; /* Nog iets kleiner op zeer smalle schermen */
+    }
+}
+
+/* Keyframes for nav links fade in (gebruikt door JS) */
 @keyframes navLinkFade {
     from {
         opacity: 0;
